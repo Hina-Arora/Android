@@ -19,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import dropit.hina.dropitproj.R;
+import dropit.hina.dropitproj.interfaces.UserDetail;
 import dropit.hina.dropitproj.model.UserData;
 import dropit.hina.dropitproj.model.UserModel;
 import dropit.hina.dropitproj.model.UserResult;
@@ -27,9 +28,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     private ArrayList<UserModel> userModel;
     private Context context;
     private boolean isLoadingAdded = false;
-    public UserListAdapter(Context context, ArrayList<UserModel> userModel) {
+    UserDetail userDetail;
+    public UserListAdapter(Context context, ArrayList<UserModel> userModel,UserDetail userDetail) {
         this.context = context;
         this.userModel = userModel;
+        this.userDetail = userDetail;
 
     }
     @Override
@@ -57,6 +60,11 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
 //            holder.recyclerView.setLayoutManager(manager);
 //            RecyclerViewAdapter adapter = new RecyclerViewAdapter(context, userModel.get(position).getItems());
 //            holder.recyclerView.setAdapter(adapter);
+
+            if (position==userModel.size()-1){
+                if(userModel.size()%10==0)
+                    userDetail.hitToServer(position+1,10);
+            }
         }
 
     }
@@ -131,4 +139,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     public UserModel getItem(int position) {
         return userModel.get(position);
     }
+
+
+
 }

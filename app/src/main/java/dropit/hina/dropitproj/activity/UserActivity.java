@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import dropit.hina.dropitproj.R;
 import dropit.hina.dropitproj.adapter.UserListAdapter;
 import dropit.hina.dropitproj.app.DropItApp;
+import dropit.hina.dropitproj.interfaces.UserDetail;
 import dropit.hina.dropitproj.listener.PaginationScrollListener;
 import dropit.hina.dropitproj.model.UserData;
 import dropit.hina.dropitproj.model.UserModel;
@@ -29,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class UserActivity extends BaseActivity {
+public class UserActivity extends BaseActivity implements UserDetail {
 
     @BindView(R.id.user_data_rv)
     RecyclerView userDataRV;
@@ -39,12 +40,7 @@ public class UserActivity extends BaseActivity {
     ArrayList<UserModel> userModel = new ArrayList<>();
     UserData userData = new UserData();
     UserListAdapter adapter = null;
-
-    private static final int PAGE_START = 0;
-
-    private boolean isLoading = false;
-
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    int page=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,48 +50,32 @@ public class UserActivity extends BaseActivity {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         userDataRV.setItemAnimator(new DefaultItemAnimator());
-
-        progressBar.setVisibility(View.GONE);
-        userDataRV.addOnScrollListener(new RecyclerView.OnScrollListener()
-        {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0) //check for scroll down
-                {
-                    visibleItemCount = layoutManager.getChildCount();
-                    totalItemCount = layoutManager.getItemCount();
-                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
-
-                    if (isLoading)
-                    {
-                        if ( userData.getHasMore() == true)
-                        {
-                            isLoading = false;
-                            getUserDetail(2);
-                        }
-                    }
-                }
-            }
-        });
         userDataRV.setLayoutManager(layoutManager);
-
-    getUserDetail(0);
+        progressBar.setVisibility(View.GONE);
+        getUserDetail(0);
 
     }
+
+    @Override
+    public void hitToServer(int offset, int limit) {
+        page++;
+        getUserDetail(offset);
+    }
+
 
     private void getUserDetail(int offset) {
         if (!connectivityCheckUtility.isConnected()) {
             showAlert("No Internet", "Please check your internet setting");
             return;
         }
-        showProgressDialog("Please wait", "Fetching Data!!");
+        progressBar.setVisibility(View.VISIBLE);
+//        showProgressDialog("Please wait", "Fetching Data!!");
 
         Call<UserData> call = DropItApp.getInstance().getEndPoints().getUserDetail(10,offset);
         call.enqueue(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
-                dismissProgress();
+                progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     if(response.body().getUserResult() != null && response.body().getUserResult().getUserModel() != null) {
                         userModel = response.body().getUserResult().getUserModel();
@@ -110,7 +90,7 @@ public class UserActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
-                dismissProgress();
+                progressBar.setVisibility(View.GONE);
                 t.printStackTrace();
                 showToast("Server error");
             }
@@ -119,7 +99,7 @@ public class UserActivity extends BaseActivity {
     }
 
     public void setUserData(ArrayList<UserModel> userModel){
-        adapter  = new UserListAdapter(this,userModel);
+        adapter  = new UserListAdapter(this,userModel,this);
         userDataRV.setAdapter(adapter);
     }
 
