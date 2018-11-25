@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         holder.name.setText(userModel.get(position).getName());
         Glide.with(context)
                 .load(Uri.parse(userModel.get(position).getImage()))
+                .apply(RequestOptions.circleCropTransform())
                 .into(holder.userImage);
 
         if(userModel.get(position).getItems() != null){

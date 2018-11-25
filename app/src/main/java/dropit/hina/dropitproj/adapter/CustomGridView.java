@@ -8,13 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
-
 import dropit.hina.dropitproj.R;
+
 
 public class CustomGridView extends BaseAdapter{
     private Context context;
@@ -32,25 +29,38 @@ public class CustomGridView extends BaseAdapter{
 
     @Override
     public Object getItem(int position) {
-        return item.get(position);
+        return null;
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.recycler_view_item, null); // inflate the layout
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.item_iv); // get the reference of ImageView
+
+        ImageViewHolder imageViewHolder = null;
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.recycler_view_item, parent, false);
+            imageViewHolder = new ImageViewHolder();
+            imageViewHolder.imageView = convertView.findViewById(R.id.item_iv);
+
+            convertView.setTag(imageViewHolder);
+        } else {
+            imageViewHolder = (ImageViewHolder) convertView.getTag();
+        }
+
         Glide.with(context)
                     .load(Uri.parse(item.get(position)))
-                    .into(imageView);
+                    .into(imageViewHolder.imageView);
         return convertView;
 
+    }
+
+    public class ImageViewHolder {
+        ImageView imageView;
     }
 
     @Override
@@ -63,3 +73,5 @@ public class CustomGridView extends BaseAdapter{
         return position;
     }
 }
+
+

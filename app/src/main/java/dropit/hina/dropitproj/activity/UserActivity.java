@@ -54,7 +54,7 @@ public class UserActivity extends BaseActivity {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         userDataRV.setItemAnimator(new DefaultItemAnimator());
-        userDataRV.setLayoutManager(layoutManager);
+
         progressBar.setVisibility(View.GONE);
         userDataRV.addOnScrollListener(new RecyclerView.OnScrollListener()
         {
@@ -72,13 +72,13 @@ public class UserActivity extends BaseActivity {
                         if ( userData.getHasMore() == true)
                         {
                             isLoading = false;
-                            getUserDetail(visibleItemCount);
+                            getUserDetail(2);
                         }
                     }
                 }
             }
         });
-
+        userDataRV.setLayoutManager(layoutManager);
 
     getUserDetail(0);
 
