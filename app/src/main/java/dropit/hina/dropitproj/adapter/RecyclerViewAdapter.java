@@ -52,10 +52,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder Vholder, int position) {
-        Glide.with(context)
-                .load(Uri.parse(items.get(position)))
-                .into(Vholder.imageView);
+        if(items.size() % 2 == 0){
+            Glide.with(context)
+                    .load(Uri.parse(items.get(position)))
+                    .into(Vholder.imageView);
 
+        }else{
+
+        }
     }
 
     @Override

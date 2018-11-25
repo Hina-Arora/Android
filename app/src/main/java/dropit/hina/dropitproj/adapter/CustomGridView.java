@@ -29,28 +29,23 @@ public class CustomGridView extends BaseAdapter{
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return position;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ImageViewHolder imageViewHolder = null;
+        convertView = LayoutInflater.from(context).inflate(R.layout.recycler_view_item, parent, false);
+        imageViewHolder = new ImageViewHolder();
+        imageViewHolder.imageView = convertView.findViewById(R.id.item_iv);
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.recycler_view_item, parent, false);
-            imageViewHolder = new ImageViewHolder();
-            imageViewHolder.imageView = convertView.findViewById(R.id.item_iv);
-
-            convertView.setTag(imageViewHolder);
-        } else {
-            imageViewHolder = (ImageViewHolder) convertView.getTag();
-        }
+        Log.e("CustomerGrid",item.get(position));
 
         Glide.with(context)
                     .load(Uri.parse(item.get(position)))

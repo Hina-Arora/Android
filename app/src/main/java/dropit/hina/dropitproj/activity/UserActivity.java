@@ -52,16 +52,16 @@ public class UserActivity extends BaseActivity implements UserDetail {
         userDataRV.setItemAnimator(new DefaultItemAnimator());
         userDataRV.setLayoutManager(layoutManager);
         progressBar.setVisibility(View.GONE);
+        adapter  = new UserListAdapter(this,userModel,this);
+        userDataRV.setAdapter(adapter);
         getUserDetail(0);
 
     }
 
     @Override
-    public void hitToServer(int offset, int limit) {
-        page++;
+    public void hitToServer(int offset) {
         getUserDetail(offset);
     }
-
 
     private void getUserDetail(int offset) {
         if (!connectivityCheckUtility.isConnected()) {
@@ -69,7 +69,6 @@ public class UserActivity extends BaseActivity implements UserDetail {
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
-//        showProgressDialog("Please wait", "Fetching Data!!");
 
         Call<UserData> call = DropItApp.getInstance().getEndPoints().getUserDetail(10,offset);
         call.enqueue(new Callback<UserData>() {
@@ -78,8 +77,12 @@ public class UserActivity extends BaseActivity implements UserDetail {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     if(response.body().getUserResult() != null && response.body().getUserResult().getUserModel() != null) {
-                        userModel = response.body().getUserResult().getUserModel();
-                        setUserData(userModel);
+//                        userModel = response.body().getUserResult().getUserModel();
+//                        setUserData(userModel);
+                        ArrayList<UserModel> model = new ArrayList<>();
+                        model = response.body().getUserResult().getUserModel();
+                        userModel.addAll(model);
+                        adapter.notifyDataSetChanged();
 
                     }
 
@@ -96,11 +99,6 @@ public class UserActivity extends BaseActivity implements UserDetail {
             }
 
         });
-    }
-
-    public void setUserData(ArrayList<UserModel> userModel){
-        adapter  = new UserListAdapter(this,userModel,this);
-        userDataRV.setAdapter(adapter);
     }
 
 }

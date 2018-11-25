@@ -53,17 +53,18 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
                 .into(holder.userImage);
 
         if(userModel.get(position).getItems() != null){
-            CustomGridView adapter = new CustomGridView(context, userModel.get(position).getItems());
-            holder.gridView.setAdapter(adapter);
+//            CustomGridView adapter = new CustomGridView(context, userModel.get(position).getItems());
+//            holder.gridView.setAdapter(adapter);
 
-//            GridLayoutManager manager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
-//            holder.recyclerView.setLayoutManager(manager);
-//            RecyclerViewAdapter adapter = new RecyclerViewAdapter(context, userModel.get(position).getItems());
-//            holder.recyclerView.setAdapter(adapter);
+            GridLayoutManager manager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
+            holder.recyclerView.setLayoutManager(manager);
+            RecyclerViewAdapter adapter = new RecyclerViewAdapter(context, userModel.get(position).getItems());
+            holder.recyclerView.setAdapter(adapter);
 
             if (position==userModel.size()-1){
                 if(userModel.size()%10==0)
-                    userDetail.hitToServer(position+1,10);
+
+                    userDetail.hitToServer(position+1);
             }
         }
 
@@ -79,13 +80,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     public class UserViewHolder extends RecyclerView.ViewHolder {
         TextView name;// init the item view's
         ImageView userImage;
-        GridView gridView;
+        RecyclerView recyclerView;
         private UserViewHolder(View itemView) {
             super(itemView);
             // get the reference of item view's
             name = (TextView) itemView.findViewById(R.id.user_name_tv);
             userImage = (ImageView) itemView.findViewById(R.id.user_iv);
-            gridView = (GridView) itemView.findViewById(R.id.items_gv);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.items_gv);
 
         }
     }

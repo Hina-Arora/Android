@@ -14,11 +14,11 @@
     </style>
     <style name="card_recycler_view">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
     </style>
     <style name="card_view">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
     </style>
     <style name="user_name">
@@ -29,12 +29,8 @@
 
     <style name="grid_view">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:verticalSpacing">10sp</item>
-        <item name="android:horizontalSpacing">10sp</item>
-        <item name="android:stretchMode">columnWidth</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
-        <item name="android:columnWidth">100sp</item>
         <item name="android:numColumns">2</item>
     </style>
 </resources>
