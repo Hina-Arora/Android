@@ -24,18 +24,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     ArrayList<String> items = new ArrayList<>();
     Context context;
 
-
     public RecyclerViewAdapter(Context context, ArrayList<String> items) {
-
         this.items = items;
         this.context = context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
         ImageView imageView;
         public ViewHolder(View v) {
-
             super(v);
             imageView = (ImageView) v.findViewById(R.id.item_iv);
 
@@ -52,14 +48,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder Vholder, int position) {
-        if(items.size() % 2 == 0){
-            Glide.with(context)
-                    .load(Uri.parse(items.get(position)))
-                    .into(Vholder.imageView);
-
-        }else{
-
-        }
+        Glide.with(context)
+                .load(Uri.parse(items.get(position)))
+                .into(Vholder.imageView);
     }
 
     @Override

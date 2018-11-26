@@ -2,9 +2,11 @@ package dropit.hina.dropitproj.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +29,12 @@ import dropit.hina.dropitproj.model.UserResult;
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserViewHolder> {
     private ArrayList<UserModel> userModel;
     private Context context;
-    private boolean isLoadingAdded = false;
-    UserDetail userDetail;
+    private ArrayList<String> localImages = new ArrayList<>();
+    UserDetail userDetail ;
     public UserListAdapter(Context context, ArrayList<UserModel> userModel,UserDetail userDetail) {
         this.context = context;
         this.userModel = userModel;
         this.userDetail = userDetail;
-
     }
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -55,15 +56,28 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         if(userModel.get(position).getItems() != null){
 //            CustomGridView adapter = new CustomGridView(context, userModel.get(position).getItems());
 //            holder.gridView.setAdapter(adapter);
+            localImages.clear();
+            Log.e("UserModel","items size "+userModel.get(position).getItems().size());
+            if(userModel.get(position).getItems().size() % 2 != 0 ){
+                holder.imageView.setVisibility(View.VISIBLE);
+                Glide.with(context)
+                        .load(Uri.parse(userModel.get(position).getItems().get(0)))
+                        .into(holder.imageView);
+                for(int i =1; i < userModel.get(position).getItems().size() ; i++){
+                    localImages.add(0,userModel.get(position).getItems().get(i));
+                }
 
+            }else{
+                holder.imageView.setVisibility(View.GONE);
+                localImages.addAll(userModel.get(position).getItems());
+            }
             GridLayoutManager manager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
             holder.recyclerView.setLayoutManager(manager);
-            RecyclerViewAdapter adapter = new RecyclerViewAdapter(context, userModel.get(position).getItems());
+            RecyclerViewAdapter adapter = new RecyclerViewAdapter(context, localImages);
             holder.recyclerView.setAdapter(adapter);
 
             if (position==userModel.size()-1){
                 if(userModel.size()%10==0)
-
                     userDetail.hitToServer(position+1);
             }
         }
@@ -73,21 +87,19 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     public int getItemCount() {
         return userModel == null ? 0 : userModel.size();
     }
-//    @Override
-//    public int getItemViewType(int position) {
-//        return (position == userModel.size() - 1 && isLoadingAdded) ? LOADING : ITEM;
-//    }
+
     public class UserViewHolder extends RecyclerView.ViewHolder {
         TextView name;// init the item view's
         ImageView userImage;
         RecyclerView recyclerView;
+        ImageView imageView;
         private UserViewHolder(View itemView) {
             super(itemView);
             // get the reference of item view's
             name = (TextView) itemView.findViewById(R.id.user_name_tv);
             userImage = (ImageView) itemView.findViewById(R.id.user_iv);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.items_gv);
-
+            imageView = (ImageView) itemView.findViewById(R.id.image_1);
         }
     }
     public void add(UserModel um) {
@@ -109,33 +121,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         }
     }
 
-    public void clear() {
-        isLoadingAdded = false;
-        while (getItemCount() > 0) {
-            remove(getItem(0));
-        }
-    }
-
-    public boolean isEmpty() {
-        return getItemCount() == 0;
-    }
-
-    public void addLoadingFooter() {
-        isLoadingAdded = true;
-        add(new UserModel());
-    }
-
-    public void removeLoadingFooter() {
-        isLoadingAdded = false;
-
-        int position = userModel.size() - 1;
-        UserModel item = getItem(position);
-
-        if (item != null) {
-            userModel.remove(position);
-            notifyItemRemoved(position);
-        }
-    }
 
     public UserModel getItem(int position) {
         return userModel.get(position);

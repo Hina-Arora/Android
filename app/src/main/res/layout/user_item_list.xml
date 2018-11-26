@@ -30,12 +30,20 @@
             android:textColor="@color/colorBlack"
             />
 
+        <ImageView
+            android:id="@+id/image_1"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_below="@+id/user_iv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/items_gv"
             android:visibility="visible"
-            android:layout_below="@+id/user_iv"
+            android:layout_below="@+id/image_1"
             style="@style/grid_view">
-
         </android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 
