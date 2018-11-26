@@ -83,6 +83,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             }
             GridLayoutManager manager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
             holder.recyclerView.setLayoutManager(manager);
+            holder.recyclerView.addItemDecoration(new GridInsetDecoration(context));
             RecyclerViewAdapter adapter = new RecyclerViewAdapter(context, localImages);
             holder.recyclerView.setAdapter(adapter);
 
