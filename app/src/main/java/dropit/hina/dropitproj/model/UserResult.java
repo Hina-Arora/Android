@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public class UserResult {
     @SerializedName("users")
     private ArrayList<UserModel> userModel;
+    @SerializedName("has_more")
+    private Boolean hasMore;
 
     public ArrayList<UserModel> getUserModel() {
         return userModel;
@@ -16,7 +18,6 @@ public class UserResult {
         this.userModel = userModel;
     }
 
-
     public Boolean getHasMore() {
         return hasMore;
     }
@@ -24,8 +25,5 @@ public class UserResult {
     public void setHasMore(Boolean hasMore) {
         this.hasMore = hasMore;
     }
-
-    @SerializedName("has_more")
-    private Boolean hasMore;
 
 }

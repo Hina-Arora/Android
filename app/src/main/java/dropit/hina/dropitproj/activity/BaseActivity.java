@@ -49,24 +49,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    public ProgressDialog progressDialog;
-
-    public void showProgressDialog(String title, String message) {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle(title);
-        progressDialog.setMessage(message);
-        progressDialog.setIndeterminate(false);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-    }
-
-    public void dismissProgress() {
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-    }
-
     public void handleError(Response<?> response) {
         BaseModel errorModel = ErrorHandlingUtility.parseError(response);
         if (errorModel != null) {
@@ -81,6 +63,4 @@ public class BaseActivity extends AppCompatActivity {
             showAlert("Oops!", "Something went wrong");
         }
     }
-
-
 }

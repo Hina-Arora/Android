@@ -14,21 +14,17 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dropit.hina.dropitproj.R;
 import dropit.hina.dropitproj.adapter.UserListAdapter;
 import dropit.hina.dropitproj.app.DropItApp;
 import dropit.hina.dropitproj.interfaces.UserDetail;
-import dropit.hina.dropitproj.listener.PaginationScrollListener;
 import dropit.hina.dropitproj.model.UserData;
 import dropit.hina.dropitproj.model.UserModel;
-import dropit.hina.dropitproj.model.UserResult;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 public class UserActivity extends BaseActivity implements UserDetail {
 
@@ -60,7 +56,7 @@ public class UserActivity extends BaseActivity implements UserDetail {
     @Override
     public void hitToServer(int offset) {
         hasMore = DropItApp.getInstance().getHasMore();
-        if(hasMore == true)
+        if(hasMore)
             getUserDetail(offset);
         else
             showToast("No more data to load!!");
@@ -86,7 +82,6 @@ public class UserActivity extends BaseActivity implements UserDetail {
                         model = response.body().getUserResult().getUserModel();
                         userModel.addAll(model);
                         adapter.notifyDataSetChanged();
-
                     }
 
                 } else {

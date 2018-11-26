@@ -52,7 +52,6 @@ public class DropItApp extends MultiDexApplication  {
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
-//        TypefaceUtil.setDefaultFont(getApplicationContext(), "SERIF", "fonts/Poppins-Regular.ttf");
         instance = this;
         initRetrofit();
     }

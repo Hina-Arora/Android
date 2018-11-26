@@ -58,8 +58,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
                 .into(holder.userImage);
 
         if(userModel.get(position).getItems() != null){
-//            CustomGridView adapter = new CustomGridView(context, userModel.get(position).getItems());
-//            holder.gridView.setAdapter(adapter);
+
             localImages.clear();
             Log.e("UserModel","items size "+userModel.get(position).getItems().size());
             if(userModel.get(position).getItems().size() % 2 != 0 ){
@@ -84,7 +83,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             }
             GridLayoutManager manager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
             holder.recyclerView.setLayoutManager(manager);
-//            holder.recyclerView.addItemDecoration(new GridInsetDecoration(context));
             RecyclerViewAdapter adapter = new RecyclerViewAdapter(context, localImages);
             holder.recyclerView.setAdapter(adapter);
 
