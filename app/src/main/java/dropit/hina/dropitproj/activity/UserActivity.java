@@ -60,7 +60,8 @@ public class UserActivity extends BaseActivity implements UserDetail {
 
     @Override
     public void hitToServer(int offset) {
-        getUserDetail(offset);
+        if(userData.getHasMore() == true)
+            getUserDetail(offset);
     }
 
     private void getUserDetail(int offset) {
