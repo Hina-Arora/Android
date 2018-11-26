@@ -25,16 +25,6 @@ public class BaseModel {
     @SerializedName("status")
     boolean status;
 
-    public Boolean getHasMore() {
-        return hasMore;
-    }
-
-    public void setHasMore(Boolean hasMore) {
-        this.hasMore = hasMore;
-    }
-
-    @SerializedName("has_more")
-    Boolean hasMore;
     @SerializedName("message")
     String message;
 

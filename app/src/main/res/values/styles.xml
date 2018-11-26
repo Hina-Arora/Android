@@ -44,10 +44,9 @@
         <item name="android:layout_centerInParent">true</item>
     </style>
     <style name="item_images_style">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">200dp</item>
         <item name="android:layout_centerVertical">true</item>
-    
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_centerInParent">true</item>
     </style>

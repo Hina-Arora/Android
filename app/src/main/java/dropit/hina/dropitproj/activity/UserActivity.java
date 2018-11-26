@@ -40,8 +40,7 @@ public class UserActivity extends BaseActivity implements UserDetail {
     ArrayList<UserModel> userModel = new ArrayList<>();
     UserData userData = new UserData();
     UserListAdapter adapter = null;
-    int page=0;
-
+    Boolean hasMore = DropItApp.getInstance().getHasMore();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +59,8 @@ public class UserActivity extends BaseActivity implements UserDetail {
 
     @Override
     public void hitToServer(int offset) {
-        if(userData.getHasMore())
+        hasMore = DropItApp.getInstance().getHasMore();
+        if(hasMore == true)
             getUserDetail(offset);
     }
 
@@ -78,8 +78,8 @@ public class UserActivity extends BaseActivity implements UserDetail {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     if(response.body().getUserResult() != null && response.body().getUserResult().getUserModel() != null) {
-//                        userModel = response.body().getUserResult().getUserModel();
-//                        setUserData(userModel);
+                        hasMore = response.body().getUserResult().getHasMore();
+                        DropItApp.getInstance().setHasMore(hasMore);
                         ArrayList<UserModel> model = new ArrayList<>();
                         model = response.body().getUserResult().getUserModel();
                         userModel.addAll(model);

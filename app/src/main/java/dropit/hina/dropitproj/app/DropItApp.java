@@ -19,6 +19,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DropItApp extends MultiDexApplication  {
 
     private Endpoints endPoints;
+
+    public Boolean getHasMore() {
+        return hasMore;
+    }
+
+    public void setHasMore(Boolean hasMore) {
+        this.hasMore = hasMore;
+    }
+
+    public static void setInstance(DropItApp instance) {
+        DropItApp.instance = instance;
+    }
+
+    private Boolean hasMore = true;
     public Endpoints getEndPoints() {
         return endPoints;
     }

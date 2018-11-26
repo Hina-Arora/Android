@@ -15,4 +15,5 @@ public class UserData extends BaseModel{
     public void setUserResult(UserResult userModel) {
         this.userResult = userModel;
     }
+
 }

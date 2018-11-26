@@ -21,24 +21,17 @@ public class GridInsetDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
-                               RecyclerView.State state) {
-        GridLayoutManager.LayoutParams layoutParams
-                = (GridLayoutManager.LayoutParams) view.getLayoutParams();
+    public void getItemOffsets(Rect outRect, View view,
+                               RecyclerView parent, RecyclerView.State state) {
+        outRect.left = insetVertical;
+        outRect.right = insetHorizontal;
+        outRect.bottom = insetVertical;
 
-        int position = layoutParams.getViewPosition();
-        if (position == RecyclerView.NO_POSITION) {
-            outRect.set(0, 0, 0, 0);
-            return;
+        // Add top margin only for the first item to avoid double space between items
+        if (parent.getChildLayoutPosition(view) == 0) {
+            outRect.top = insetVertical;
+        } else {
+            outRect.top = 0;
         }
-
-        // add edge margin only if item edge is not the grid edge
-        int itemSpanIndex = layoutParams.getSpanIndex();
-        // is left grid edge?
-        outRect.left = itemSpanIndex == 0 ? 0 : insetHorizontal;
-        // is top grid edge?
-        outRect.top = itemSpanIndex == position ? 0 : insetVertical;
-        outRect.right = 0;
-        outRect.bottom = 0;
     }
 }

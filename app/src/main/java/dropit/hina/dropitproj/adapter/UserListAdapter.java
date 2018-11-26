@@ -33,10 +33,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     private Context context;
     private ArrayList<String> localImages = new ArrayList<>();
     UserDetail userDetail ;
+
     public UserListAdapter(Context context, ArrayList<UserModel> userModel,UserDetail userDetail) {
         this.context = context;
         this.userModel = userModel;
         this.userDetail = userDetail;
+
     }
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,7 +63,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             localImages.clear();
             Log.e("UserModel","items size "+userModel.get(position).getItems().size());
             if(userModel.get(position).getItems().size() % 2 != 0 ){
-
                 DisplayMetrics dm = new DisplayMetrics();
                 ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
                 int width=dm.widthPixels;
@@ -83,7 +84,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             }
             GridLayoutManager manager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
             holder.recyclerView.setLayoutManager(manager);
-            holder.recyclerView.addItemDecoration(new GridInsetDecoration(context));
+//            holder.recyclerView.addItemDecoration(new GridInsetDecoration(context));
             RecyclerViewAdapter adapter = new RecyclerViewAdapter(context, localImages);
             holder.recyclerView.setAdapter(adapter);
 

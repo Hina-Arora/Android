@@ -16,4 +16,16 @@ public class UserResult {
         this.userModel = userModel;
     }
 
+
+    public Boolean getHasMore() {
+        return hasMore;
+    }
+
+    public void setHasMore(Boolean hasMore) {
+        this.hasMore = hasMore;
+    }
+
+    @SerializedName("has_more")
+    private Boolean hasMore;
+
 }
