@@ -50,12 +50,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder Vholder, int position) {
-//        DisplayMetrics dm = new DisplayMetrics();
-//        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
-//        int width=dm.widthPixels;
-//
-//        Vholder.imageView.getLayoutParams().height = width/2;
-//        Vholder.imageView.getLayoutParams().width = width/2;
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width=dm.widthPixels;
+
+        Vholder.imageView.getLayoutParams().height = width/2;
+        Vholder.imageView.getLayoutParams().width = width/2;
         Glide.with(context)
                 .load(Uri.parse(items.get(position)))
                 .into(Vholder.imageView);

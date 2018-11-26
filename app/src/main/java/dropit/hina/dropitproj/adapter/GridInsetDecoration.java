@@ -10,8 +10,8 @@ import dropit.hina.dropitproj.R;
 
 public class GridInsetDecoration extends RecyclerView.ItemDecoration {
 
-    private int insetHorizontal;
-    private int insetVertical;
+    private int insetHorizontal = 0;
+    private int insetVertical = 0;
 
     public GridInsetDecoration(Context context) {
         insetHorizontal = context.getResources()

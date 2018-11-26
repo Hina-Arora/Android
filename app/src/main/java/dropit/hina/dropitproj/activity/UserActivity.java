@@ -62,6 +62,8 @@ public class UserActivity extends BaseActivity implements UserDetail {
         hasMore = DropItApp.getInstance().getHasMore();
         if(hasMore == true)
             getUserDetail(offset);
+        else
+            showToast("No more data to load!!");
     }
 
     private void getUserDetail(int offset) {
