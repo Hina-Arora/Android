@@ -1,10 +1,12 @@
 package dropit.hina.dropitproj.adapter;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder Vholder, int position) {
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int width=dm.widthPixels;
+
+        Vholder.imageView.getLayoutParams().height = (int)width/2;
+        Vholder.imageView.getLayoutParams().width = (int)width/2;
         Glide.with(context)
                 .load(Uri.parse(items.get(position)))
                 .into(Vholder.imageView);

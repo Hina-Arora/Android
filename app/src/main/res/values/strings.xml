@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">DropItProj</string>
     <string name="user_image">User Image</string>
+    <string name="item_image">Image of items</string>
 </resources>

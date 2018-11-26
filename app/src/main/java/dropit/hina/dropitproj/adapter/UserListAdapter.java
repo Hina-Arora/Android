@@ -1,11 +1,13 @@
 package dropit.hina.dropitproj.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +61,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             localImages.clear();
             Log.e("UserModel","items size "+userModel.get(position).getItems().size());
             if(userModel.get(position).getItems().size() % 2 != 0 ){
+
+                DisplayMetrics dm = new DisplayMetrics();
+                ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+                int width=dm.widthPixels;
+
+                holder.imageView.getLayoutParams().height = (int)width;
+                holder.imageView.getLayoutParams().width = (int)width;
+
                 holder.imageView.setVisibility(View.VISIBLE);
                 Glide.with(context)
                         .load(Uri.parse(userModel.get(position).getItems().get(0)))
